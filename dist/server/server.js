@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
+const path = require("path");
 // Clase para manejar el servidor de manera que se pueda reutilizar el codigo facilmente
 class Server {
     constructor(port) {
@@ -14,9 +15,15 @@ class Server {
         // se va a inicializar con 'init', y siempre se va a usar la misma instancia
         return new Server(port);
     }
+    // Metodo para desplegar el public folder
+    publicFolder() {
+        const publicPath = path.resolve(__dirname, '../public');
+        this.app.use(express.static(publicPath));
+    }
     // PAra que empiece a escuchar
     start(callback) {
         this.app.listen(this.port, callback);
+        this.publicFolder();
     }
 }
 exports.default = Server;
