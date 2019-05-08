@@ -1,4 +1,5 @@
 import express = require('express');
+import path = require('path');
 
 // Clase para manejar el servidor de manera que se pueda reutilizar el codigo facilmente
 export default class Server {
@@ -18,9 +19,17 @@ export default class Server {
     return new Server( port);
   }
 
+  // Metodo para desplegar el public folder
+  private publicFolder(){
+    const publicPath = path.resolve(__dirname, '../public');
+
+    this.app.use(express.static(publicPath));
+  }
+
   // PAra que empiece a escuchar
   start(callback: Function){
     this.app.listen(this.port, callback);
+    this.publicFolder();
   }
 }
 
