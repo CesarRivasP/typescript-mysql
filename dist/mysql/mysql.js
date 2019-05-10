@@ -22,6 +22,22 @@ class MySQL {
         return this._instance || (this._instance = new this());
         // Asi va establecer que cuando se llame muchas veces al get instance, siempre se utilice la misma instancia definida
     }
+    static executeQuery(query, callback) {
+        this.instance.connection.query(query, (error, results, fields) => {
+            if (error) {
+                console.log('Error en Query');
+                console.log(error);
+                return callback(error);
+            }
+            if (results.length === 0) {
+                return callback('El registro solicitado no exite');
+            }
+            else {
+                //null porque no hubo error
+                callback(null, results);
+            }
+        });
+    }
     connectingDB() {
         this.connection.connect((error) => {
             if (error) {
