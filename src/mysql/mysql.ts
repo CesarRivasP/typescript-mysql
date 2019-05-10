@@ -33,6 +33,24 @@ export default class MySQL {
     // Asi va establecer que cuando se llame muchas veces al get instance, siempre se utilice la misma instancia definida
   }
 
+  static executeQuery(query: string, callback: Function){
+    this.instance.connection.query(query, (error, results: Object[], fields) => {
+      if(error){
+        console.log('Error en Query')
+        console.log(error);
+        return callback(error);
+      }
+
+      if(results.length === 0){
+        return callback('El registro solicitado no exite');
+      }
+      else {
+        //null porque no hubo error
+        callback(null, results);
+      }
+    })
+  }
+
   private connectingDB(){
     this.connection.connect((error: mysql.MysqlError) => {
       if(error){
