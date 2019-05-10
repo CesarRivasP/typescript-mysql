@@ -9,7 +9,8 @@ const mysql_1 = __importDefault(require("./mysql/mysql"));
 const server = server_1.default.init(3000);
 server.app.use(router_1.default);
 // Instancia de la base de datos
-const mysql = new mysql_1.default();
+// const mysql = new MySQL(); Before
+mysql_1.default.instance; //After with geter for instance
 server.start(() => {
     console.log('Servidor corriendo en el puerto 3000');
 });
