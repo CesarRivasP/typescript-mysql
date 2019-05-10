@@ -7,7 +7,8 @@ server.app.use(router);
 
 
 // Instancia de la base de datos
-const mysql = new MySQL();
+// const mysql = new MySQL(); Before
+// MySQL.instance; //After with geter for instance
 
 server.start(() => {
   console.log('Servidor corriendo en el puerto 3000')
